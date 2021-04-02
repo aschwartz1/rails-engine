@@ -1,8 +1,8 @@
-###What Changed
+### What Changed
 - What did you do?
 
-###Next Steps
+### Next Steps
 - What are your relevant next steps, or the next steps for this feature/bugfix/etc?
 
-###Known Issues
+### Known Issues
 - Any problems you're aware of?
