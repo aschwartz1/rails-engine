@@ -7,5 +7,5 @@ class ApplicationController < ActionController::API
     @page_number = params[:page] ? params[:page].to_i : 1
   end
 
-  helper_method :params_per_page, :params_page_number
+  helper_method :per_page, :page_number
 end
