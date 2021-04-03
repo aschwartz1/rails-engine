@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::API
+  include ActionController::Helpers
+
   def per_page
     @per_page = params[:per_page] ? params[:per_page].to_i : 20
   end
