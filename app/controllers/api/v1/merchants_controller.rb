@@ -48,7 +48,7 @@ class Api::V1::MerchantsController < ApplicationController
     Merchant.all_limit(records_needed_for_request)
   end
 
-  def minimum(num_1, num_2)
-    [num_1, num_2].min
+  def minimum(num1, num2)
+    [num1, num2].min
   end
 end
