@@ -10,4 +10,9 @@ class Merchant < ApplicationRecord
 
     Merchant.all.limit(limit)
   end
+
+  def self.find_one_by_name(search_fragment)
+    # where('LOWER(name) LIKE ?', "%#{search_fragment.downcase}%").first
+    find_by('LOWER(name) LIKE ?', "%#{search_fragment.downcase}%")
+  end
 end
