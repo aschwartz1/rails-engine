@@ -36,13 +36,14 @@ class ApplicationController < ActionController::API
   end
 
   def fetch_name
-    name_param = params[:name]
+    params[:name].presence || ''
+    # name_param = params[:name]
 
-    if name_param.nil? || name_param.empty?
-      ""
-    else
-      name_param
-    end
+    # if name_param.blank?
+    #   ''
+    # else
+    #   name_param
+    # end
   end
 
   helper_method :per_page, :page_number, :name

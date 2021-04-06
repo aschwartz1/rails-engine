@@ -42,6 +42,16 @@ describe 'Find one merchant request' do
       expect(attributes[:name]).to be_a(String)
       expect(attributes[:name]).to eq(merchant.name)
     end
+
+    it 'returns empty hash in `data` if no match is found' do
+      get api_v1_merchants_find_one_path(name: 'asdf')
+
+      expect(response).to be_successful
+      body = JSON.parse(response.body, symbolize_names: true)
+
+      expect(body).to have_key(:data)
+      expect(body[:data]).to eq({})
+    end
   end
 
   describe 'sad path' do
