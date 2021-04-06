@@ -28,5 +28,35 @@ RSpec.describe Merchant, type: :model do
         expect(Merchant.all_limit(5).size).to eq(0)
       end
     end
+
+    describe '::find_one_by_name' do
+      it 'returns merchant with matching name' do
+        merchant_a = create(:merchant, name: 'A Merchant')
+        merchant_b = create(:merchant, name: 'B Merchant')
+
+        expect(Merchant.find_one_by_name('B Merchant')).to eq(merchant_b)
+      end
+
+      it 'search is case insensitive' do
+        merchant_a = create(:merchant, name: 'A Merchant')
+        merchant_b = create(:merchant, name: 'B Merchant')
+
+        expect(Merchant.find_one_by_name('b merchant')).to eq(merchant_b)
+      end
+
+      it 'returns partial matches' do
+        turing = create(:merchant, name: 'Turing')
+        ring_world = create(:merchant, name: "Zing's Rings")
+
+        expect(Merchant.find_one_by_name('ring')).to eq(turing)
+      end
+
+      it 'returns nil if there are no matches' do
+        turing = create(:merchant, name: 'Turing')
+        ring_world = create(:merchant, name: "Zing's Rings")
+
+        expect(Merchant.find_one_by_name('asdf')).to be_nil
+      end
+    end
   end
 end
