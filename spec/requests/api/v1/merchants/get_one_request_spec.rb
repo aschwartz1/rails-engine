@@ -50,15 +50,14 @@ describe 'Get one merchants request' do
 
       expect(response).to have_http_status(404)
       body = JSON.parse(response.body, symbolize_names: true)
+      null_merchant = body[:data]
 
-      expect(body).to be_a(Hash)
-      expect(body.size).to eq(2)
+      expect(null_merchant[:id]).to eq(nil)
+      expect(null_merchant[:type]).to eq('merchant')
+      expect(null_merchant[:attributes].size).to eq(1)
 
-      expect(body).to have_key(:code)
-      expect(body[:code]).to eq(404)
-
-      expect(body).to have_key(:status)
-      expect(body[:status]).to eq('Not Found')
+      attributes = null_merchant[:attributes]
+      expect(attributes[:name]).to eq(nil)
     end
   end
 end
