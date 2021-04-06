@@ -26,4 +26,14 @@ RSpec.describe 'Factory Bot' do
     expect(returned.status).to eq('returned')
     expect(packaged.status).to eq('packaged')
   end
+
+  it 'transaction traits work' do
+    failed = create(:transaction, :failed)
+    refunded = create(:transaction, :refunded)
+    success = create(:transaction, :success)
+
+    expect(failed.result).to eq('failed')
+    expect(refunded.result).to eq('refunded')
+    expect(success.result).to eq('success')
+  end
 end
