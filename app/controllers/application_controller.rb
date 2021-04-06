@@ -9,6 +9,10 @@ class ApplicationController < ActionController::API
     @page_number ||= fetch_page_number
   end
 
+  def name
+    @name ||= fetch_name
+  end
+
   private
 
   def fetch_per_page
@@ -31,5 +35,15 @@ class ApplicationController < ActionController::API
     end
   end
 
-  helper_method :per_page, :page_number
+  def fetch_name
+    name_param = params[:name]
+
+    if name_param.nil? || name_param.empty?
+      ""
+    else
+      name_param
+    end
+  end
+
+  helper_method :per_page, :page_number, :name
 end
