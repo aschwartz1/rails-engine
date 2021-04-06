@@ -3,41 +3,23 @@ class Api::V1::Merchants::SearchController < ApplicationController
     if name.empty?
       render json: bad_request, status: :bad_request
     else
-      render json: find_one_response(name)
+      merchant = search_result(name)
+      render json: success_response(merchant)
     end
   end
 
   private
 
-  def find_one_response(search_name)
-    {
-      data: format_merchant(search_result(search_name))
-    }
+  def success_response(merchant)
+    if merchant
+      MerchantSerializer.new(merchant)
+    else
+      { data: {} }
+    end
   end
 
   def search_result(search_name)
     Merchant.find_one_by_name(search_name)
-  end
-
-  def format_merchant(merchant)
-    # TODO: duplicate, also in merchants_controller.rb
-    #   Well, almost. The other one doesn't handle a nil merchant
-    if merchant
-      {
-        id: merchant.id.to_s,
-        type: 'merchant',
-        attributes: merchant_attributes(merchant)
-      }
-    else
-      {}
-    end
-  end
-
-  def merchant_attributes(merchant)
-    # TODO: duplicate, also in merchants_controller
-    {
-      name: merchant.name
-    }
   end
 
   def bad_request
