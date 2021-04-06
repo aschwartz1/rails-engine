@@ -1,57 +1,22 @@
 class Api::V1::MerchantsController < ApplicationController
   def index
-    render json: all_merchants_response
+    render json: MerchantSerializer.new(paginate(all_merchants))
   end
 
   def show
     id_param = params[:id]
 
     if Merchant.exists?(id_param)
-      render json: single_merchant_response(id_param)
+      render json: MerchantSerializer.new(Merchant.find(id_param))
     else
-      render json: not_found, status: :not_found
+      render json: MerchantSerializer.new(null_merchant), status: :not_found
     end
   end
 
   private
 
-  def all_merchants_response
-    {
-      data: format_merchants(paginate(all_merchants))
-    }
-  end
-
-  def format_merchants(merchants)
-    merchants.map do |merchant|
-      format_merchant(merchant)
-    end
-  end
-
-  def merchant_attributes(merchant)
-    {
-      name: merchant.name
-    }
-  end
-
-  def single_merchant_response(id)
-    {
-      data: format_merchant(Merchant.find(id))
-    }
-  end
-
-  def format_merchant(merchant)
-    {
-      id: merchant.id.to_s,
-      type: 'merchant',
-      attributes: merchant_attributes(merchant)
-    }
-  end
-
-  def not_found
-    {
-      code: 404,
-      status: 'Not Found'
-    }
+  def null_merchant
+    OpenStruct.new(id: nil, name: nil)
   end
 
   def paginate(results)
