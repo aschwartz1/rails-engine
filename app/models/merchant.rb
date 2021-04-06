@@ -12,7 +12,14 @@ class Merchant < ApplicationRecord
   end
 
   def self.find_one_by_name(search_fragment)
-    # where('LOWER(name) LIKE ?', "%#{search_fragment.downcase}%").first
     find_by('LOWER(name) LIKE ?', "%#{search_fragment.downcase}%")
+  end
+
+  def total_revenue
+    invoices
+      .joins(:invoice_items, :transactions)
+      .where("transactions.result = 'success' AND invoices.status = 'shipped'")
+      .sum('invoice_items.quantity * invoice_items.unit_price')
+      .to_f
   end
 end
