@@ -3,4 +3,10 @@ class Item < ApplicationRecord
   has_many :invoice_items, dependent: :destroy
   has_many :invoices, through: :invoice_items
   has_many :customers, through: :invoices
+
+  def self.all_limit(limit)
+    return [] if limit < 1
+
+    Item.all.limit(limit)
+  end
 end
