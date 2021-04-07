@@ -13,7 +13,33 @@ class Api::V1::ItemsController < ApplicationController
     end
   end
 
+  def create
+    item = Item.new(item_params)
+
+    if verify_item_params(item_params)
+      if item.save
+        render json: ItemSerializer.new(item), status: :created
+      else
+        render json: save_failed, status: :internal_server_error
+      end
+    else
+      render json: bad_request, status: :bad_request
+    end
+  end
+
   private
+
+  def item_params
+    params.require(:item).permit(:name, :description, :unit_price, :merchant_id)
+  end
+
+  def verify_item_params(params)
+    expected_keys = %i[name description unit_price merchant_id]
+
+    expected_keys.all? do |key|
+      params.key? key
+    end && params.keys.size == 4
+  end
 
   def null_item
     OpenStruct.new(id: nil, name: nil, description: nil, unit_price: nil)
@@ -41,5 +67,19 @@ class Api::V1::ItemsController < ApplicationController
 
   def minimum(num1, num2)
     [num1, num2].min
+  end
+
+  def bad_request
+    {
+      code: 400,
+      status: 'Invalid Item Data'
+    }
+  end
+
+  def save_failed
+    {
+      code: 500,
+      status: 'Failed to Save Item'
+    }
   end
 end
