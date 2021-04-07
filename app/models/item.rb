@@ -7,6 +7,6 @@ class Item < ApplicationRecord
   def self.all_limit(limit)
     return [] if limit < 1
 
-    Merchant.all.limit(limit)
+    Item.all.limit(limit)
   end
 end

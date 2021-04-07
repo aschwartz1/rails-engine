@@ -14,7 +14,10 @@ RSpec.describe Merchant, type: :model do
       it 'returns <limit> merchants' do
         merchants = create_list(:merchant, 10)
 
-        expect(Merchant.all_limit(5).size).to eq(5)
+        result = Merchant.all_limit(5)
+        expect(result.size).to eq(5)
+        expect(result.first).to be_a(Merchant)
+        expect(result.last).to be_a(Merchant)
       end
 
       it 'returns empty array when limit < 1' do
