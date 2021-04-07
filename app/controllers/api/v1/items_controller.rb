@@ -27,7 +27,28 @@ class Api::V1::ItemsController < ApplicationController
     end
   end
 
+  def update
+    head :not_found and return unless valid_merchant_param?
+
+    item = Item.find_by(id: params[:id])
+
+    if item
+      item.update(item_params)
+      render json: ItemSerializer.new(item)
+    else
+      head :not_found
+    end
+  end
+
   private
+
+  def valid_merchant_param?
+    # No merchant param is valid
+    return true unless item_params.include?(:merchant_id)
+
+    # If merchant param present, make sure it is valid
+    Merchant.exists?(item_params[:merchant_id])
+  end
 
   def item_params
     params.require(:item).permit(:name, :description, :unit_price, :merchant_id)
