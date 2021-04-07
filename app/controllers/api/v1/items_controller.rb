@@ -3,21 +3,21 @@ class Api::V1::ItemsController < ApplicationController
     render json: ItemSerializer.new(paginate(all_items))
   end
 
-  # def show
-  #   id_param = params[:id]
+  def show
+    id_param = params[:id]
 
-  #   if Merchant.exists?(id_param)
-  #     render json: MerchantSerializer.new(Merchant.find(id_param))
-  #   else
-  #     render json: MerchantSerializer.new(null_merchant), status: :not_found
-  #   end
-  # end
+    if Item.exists?(id_param)
+      render json: ItemSerializer.new(Item.find(id_param))
+    else
+      render json: ItemSerializer.new(null_item), status: :not_found
+    end
+  end
 
   private
 
-  # def null_item
-  #   OpenStruct.new(id: nil, name: nil, description: nil, unit_price: nil)
-  # end
+  def null_item
+    OpenStruct.new(id: nil, name: nil, description: nil, unit_price: nil)
+  end
 
   def paginate(results)
     last_results_index = (results.size - 1)

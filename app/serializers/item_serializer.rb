@@ -3,6 +3,10 @@ class ItemSerializer
   attributes :name, :description, :merchant_id
 
   attribute :unit_price do |item|
-    item.unit_price.to_f
+    if item.id.nil?
+      nil
+    else
+      item.unit_price.to_f
+    end
   end
 end
