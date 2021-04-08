@@ -59,5 +59,13 @@ describe 'Get items for merchant request' do
         expect(attributes[:merchant_id]).to eq(actual_items[i].merchant_id)
       end
     end
+  end
+
+  describe 'sad path' do
+    it 'returns 404 if given a bad id' do
+      get api_v1_merchant_items_path(-1)
+
+      expect(response).to have_http_status(404)
     end
   end
+end
