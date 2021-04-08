@@ -31,3 +31,90 @@ def merchant_with_65_99_total_revenue_and_disregarded_invoices_and_transactions
   # invoice 5 has no transaction
   # Expect invoice 3, 4, 5 to not be counted in total revenue
 end
+
+def setup_merchants_with_revenue
+  merchant_revenue_10
+  merchant_revenue_20
+  merchant_revenue_30
+  merchant_revenue_40
+  merchant_revenue_50
+  merchant_revenue_1
+  merchant_revenue_6
+end
+
+def merchant_revenue_10
+  @merchant_revenue_10 = create(:merchant, name: 'Merchant 1')
+  customer = create(:customer)
+  item = @merchant_revenue_10.items.create!(name: 'Item', description: 'foo bar baz quux', unit_price: 10)
+  item_2 = @merchant_revenue_10.items.create!(name: 'Item 2', description: 'foo bar baz quux', unit_price: 20)
+  # Note second invoice is not shipped
+  invoice = Invoice.create!(customer_id: customer.id, merchant_id: @merchant_revenue_10.id, status: 'shipped')
+  invoice_2 = Invoice.create!(customer_id: customer.id, merchant_id: @merchant_revenue_10.id, status: 'packaged')
+  InvoiceItem.create!(invoice_id: invoice.id, item_id: item.id, quantity: 1, unit_price: 10)
+  InvoiceItem.create!(invoice_id: invoice_2.id, item_id: item_2.id, quantity: 1, unit_price: 50)
+  Transaction.create!(invoice_id: invoice.id, result: 'success')
+  Transaction.create!(invoice_id: invoice_2.id, result: 'success')
+end
+
+def merchant_revenue_20
+  @merchant_revenue_20 = create(:merchant, name: 'Merchant 2')
+  customer = create(:customer)
+  item = @merchant_revenue_20.items.create!(name: 'Item', description: 'foo bar baz quux', unit_price: 10)
+  item_2 = @merchant_revenue_20.items.create!(name: 'Item 2', description: 'foo bar baz quux', unit_price: 20)
+  invoice = Invoice.create!(customer_id: customer.id, merchant_id: @merchant_revenue_20.id, status: 'shipped')
+  invoice_2 = Invoice.create!(customer_id: customer.id, merchant_id: @merchant_revenue_20.id, status: 'shipped')
+  InvoiceItem.create!(invoice_id: invoice.id, item_id: item.id, quantity: 1, unit_price: 20)
+  InvoiceItem.create!(invoice_id: invoice_2.id, item_id: item_2.id, quantity: 1, unit_price: 40)
+  # Note second transaction is failed
+  Transaction.create!(invoice_id: invoice.id, result: 'success')
+  Transaction.create!(invoice_id: invoice_2.id, result: 'failed')
+end
+
+def merchant_revenue_30
+  @merchant_revenue_30 = create(:merchant, name: 'Merchant 3')
+  customer = create(:customer)
+  item = @merchant_revenue_30.items.create!(name: 'Item', description: 'foo bar baz quux', unit_price: 20)
+  invoice = Invoice.create!(customer_id: customer.id, merchant_id: @merchant_revenue_30.id, status: 'shipped')
+  InvoiceItem.create!(invoice_id: invoice.id, item_id: item.id, quantity: 1, unit_price: 30)
+  Transaction.create!(invoice_id: invoice.id, result: 'success')
+end
+
+def merchant_revenue_40
+  @merchant_revenue_40 = create(:merchant, name: 'Merchant 4')
+  customer = create(:customer)
+  item_1 = @merchant_revenue_40.items.create!(name: 'Item 1', description: 'foo bar baz quux', unit_price: 10)
+  invoice_1 = Invoice.create!(customer_id: customer.id, merchant_id: @merchant_revenue_40.id, status: 'shipped')
+  InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_1.id, quantity: 1, unit_price: 40)
+  Transaction.create!(invoice_id: invoice_1.id, result: 'success')
+end
+
+def merchant_revenue_50
+  @merchant_revenue_50 = create(:merchant, name: 'Merchant 5')
+  customer = create(:customer)
+  item_1 = @merchant_revenue_50.items.create!(name: 'Item 1', description: 'foo bar baz quux', unit_price: 10)
+  invoice_1 = Invoice.create!(customer_id: customer.id, merchant_id: @merchant_revenue_50.id, status: 'shipped')
+  InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_1.id, quantity: 1, unit_price: 50)
+  Transaction.create!(invoice_id: invoice_1.id, result: 'success')
+end
+
+def merchant_revenue_1
+  @merchant_revenue_1 = create(:merchant, name: 'Merchant 6')
+  customer = create(:customer)
+  item = @merchant_revenue_1.items.create!(name: 'Item', description: 'foo bar baz quux', unit_price: 10)
+  invoice = Invoice.create!(customer_id: customer.id, merchant_id: @merchant_revenue_1.id, status: 'shipped')
+  InvoiceItem.create!(invoice_id: invoice.id, item_id: item.id, quantity: 1, unit_price: 1)
+  Transaction.create!(invoice_id: invoice.id, result: 'success')
+end
+
+def merchant_revenue_6
+  @merchant_revenue_6 = create(:merchant, name: 'Merchant 7')
+  customer = create(:customer)
+  item_1 = @merchant_revenue_6.items.create!(name: 'Item 1', description: 'foo bar baz quux', unit_price: 10)
+  item_2 = @merchant_revenue_6.items.create!(name: 'Item 2', description: 'foo bar baz quux', unit_price: 20)
+  invoice_1 = Invoice.create!(customer_id: customer.id, merchant_id: @merchant_revenue_6.id, status: 'shipped')
+  invoice_2 = Invoice.create!(customer_id: customer.id, merchant_id: @merchant_revenue_6.id, status: 'shipped')
+  InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_1.id, quantity: 1, unit_price: 3)
+  InvoiceItem.create!(invoice_id: invoice_2.id, item_id: item_2.id, quantity: 1, unit_price: 3)
+  Transaction.create!(invoice_id: invoice_1.id, result: 'success')
+  Transaction.create!(invoice_id: invoice_2.id, result: 'success')
+end
