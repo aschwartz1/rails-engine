@@ -23,7 +23,7 @@ class Api::V1::ItemsController < ApplicationController
         render json: save_failed, status: :internal_server_error
       end
     else
-      render json: bad_request, status: :bad_request
+      render json: bad_request('Invalid Item Data'), status: :bad_request
     end
   end
 
@@ -38,6 +38,13 @@ class Api::V1::ItemsController < ApplicationController
     else
       head :not_found
     end
+  end
+
+  def destroy
+    destroyer = ItemDestroyer.new(params[:id])
+    destroyer.destroy
+
+    render json: bad_request(destroyer.error), status: :bad_request unless destroyer.error.empty?
   end
 
   private
@@ -90,10 +97,10 @@ class Api::V1::ItemsController < ApplicationController
     [num1, num2].min
   end
 
-  def bad_request
+  def bad_request(status)
     {
       code: 400,
-      status: 'Invalid Item Data'
+      status: status
     }
   end
 
