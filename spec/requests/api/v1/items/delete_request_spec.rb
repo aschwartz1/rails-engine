@@ -42,7 +42,9 @@ describe 'Delete item request' do
   end
 
   describe 'sad path' do
-    it 'returns __WHAT?__ when passed invalid id' do
+    it 'returns 400 when passed invalid id' do
+      delete api_v1_item_path('foo')
+      expect(response).to have_http_status(400)
     end
   end
 end
