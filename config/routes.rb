@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       get '/merchants/find_one', to: 'merchants/search#show'
       resources :merchants, only: [:index, :show]
+      get '/merchants/:id/items', to: 'merchants/items#index', as: 'merchant_items'
       resources :items, only: [:index, :show, :create, :update, :destroy]
 
       namespace :revenue do
