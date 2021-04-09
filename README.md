@@ -197,7 +197,7 @@ Track Merchants and their items, invoices, and transactions.
 >    "id": "2",
 >    "type": "merchant_name_revenue",
 >    "attributes": {
->      "name": "Brahan's Books"
+>      "name": "Brahan's Books",
 >      "revenue": 10.0
 >     }
 >  },
