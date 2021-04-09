@@ -14,7 +14,7 @@ Track Merchants and their items, invoices, and transactions.
 ## Endpoints
 ### Merchants
 **Get all merchants**
-> `GET /api/v1/merchants`
+> `GET /api/v1/merchants` will return data in the form:
 >```json
 >{
 >  "data": [
@@ -46,10 +46,8 @@ Track Merchants and their items, invoices, and transactions.
 
 
 **Get one merchant**
-> `GET /api/v1/merchant/:id`
+> `GET /api/v1/merchant/:id` for an `:id` of 1 will return data in the form
 >```json
-> # GET /api/v1/merchant/1
->
 >{
 >  "data":
 >   {
@@ -57,7 +55,8 @@ Track Merchants and their items, invoices, and transactions.
 >    "type": "merchant",
 >    "attributes": {
 >      "name": "WPI Records"
->   }
+>    }
+>  }
 >}
 >```
 
@@ -109,10 +108,8 @@ Track Merchants and their items, invoices, and transactions.
     - See [get all merchants](#get_all_merchants) for pagination information
 
 **Get one item**
-> `GET /api/v1/item/:id`
+> `GET /api/v1/item/:id` for an `:id` of 1 will return data in the form
 >```json
-> # GET /api/v1/item/1
->
 >{
 >  "data":
 >   {
@@ -173,15 +170,14 @@ Track Merchants and their items, invoices, and transactions.
 >    "type": "merchant_revenue",
 >    "attributes": {
 >      "revenue": 999.01
->   }
+>    }
+>  }
 >}
 >```
 
 **Get <x> top merchants by revenue**
-> `GET /api/v1/revenue/merchants?quantity=<number_of_merchants>`
+> `GET /api/v1/revenue/merchants?quantity=<number_of_merchants>` for a `:quantity` of 1 will return data in the form
 >```json
-># GET /api/v1/revenue/merchants?quantity=2
->
 >{
 >  "data": [
 >   {
@@ -190,6 +186,7 @@ Track Merchants and their items, invoices, and transactions.
 >    "attributes": {
 >      "name": "WPI Records",
        "revenue": 999.01
+     }
 >   },
 >   {
 >    "id": "2",
@@ -197,10 +194,11 @@ Track Merchants and their items, invoices, and transactions.
 >    "attributes": {
 >      "name": "Brahan's Books"
        "revenue": 10.0
+>     }
 >    },
 >    ...
 >  ]
 >}
 >```
   - Notes
-    - `"quantity"` must exist and be an integer > 0
+    - `quantity` must exist and be an integer > 0
