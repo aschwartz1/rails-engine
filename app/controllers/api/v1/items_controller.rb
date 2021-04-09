@@ -44,7 +44,9 @@ class Api::V1::ItemsController < ApplicationController
     destroyer = ItemDestroyer.new(params[:id])
     destroyer.destroy
 
-    render json: bad_request(destroyer.error), status: :bad_request unless destroyer.error.empty?
+    return if destroyer.error.empty?
+
+    render json: bad_request(destroyer.error), status: :bad_request
   end
 
   private
