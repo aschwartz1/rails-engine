@@ -16,12 +16,14 @@ class Merchant < ApplicationRecord
   end
 
   def self.top_by_revenue(limit)
+    # rubocop:disable Style/SymbolArray
     joins(invoices: [:invoice_items, :transactions])
-      .select('merchants.id, SUM(invoice_items.quantity * invoice_items.unit_price)')
+      .select('merchants.*, SUM(invoice_items.quantity * invoice_items.unit_price)')
       .where("transactions.result = 'success' AND invoices.status = 'shipped'")
       .group(:id)
       .order('SUM(invoice_items.quantity * invoice_items.unit_price) DESC')
       .limit(limit)
+    # rubocop:enable Style/SymbolArray
   end
 
   def total_revenue
