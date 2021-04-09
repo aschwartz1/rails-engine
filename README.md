@@ -18,21 +18,21 @@ Track Merchants and their items, invoices, and transactions.
 >```json
 >{
 >  "data": [
->   {
+>  {
 >    "id": "1",
 >    "type": "merchant",
 >    "attributes": {
 >      "name": "WPI Records"
 >    }
->   },
->   {
+>  },
+>  {
 >    "id": "2",
 >    "type": "merchant",
 >    "attributes": {
 >      "name": "Brahan's Books"
->     }
->    },
->    ...
+>    }
+>  },
+>  ...
 >  ]
 >}
 >```
@@ -85,25 +85,25 @@ Track Merchants and their items, invoices, and transactions.
 >```json
 >{
 >  "data": [
->   {
->     "id": "1",
->     "type": "item",
->     "attributes": {
->       "name": "When The Blood Comes Home Demo",
->       "description": "The sound of WPI",
->       "unit_price": 29.99
->     }
->   },
->   {
->     "id": "2",
->     "type": "item",
->     "attributes": {
->       "name": "Run of the mill widget",
->       "description": "meh",
->       "unit_price": 0.99
->     }
->    },
->    ...
+>  {
+>    "id": "1",
+>    "type": "item",
+>    "attributes": {
+>      "name": "When The Blood Comes Home Demo",
+>      "description": "The sound of WPI",
+>      "unit_price": 29.99
+>    }
+>  },
+>  {
+>    "id": "2",
+>    "type": "item",
+>    "attributes": {
+>      "name": "Run of the mill widget",
+>      "description": "meh",
+>      "unit_price": 0.99
+>    }
+>  },
+>  ...
 >  ]
 >}
 >```
