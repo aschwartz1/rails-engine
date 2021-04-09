@@ -4,7 +4,7 @@ describe 'Merchant total revenue request' do
   describe 'structure' do
     it 'main response body contains one key' do
       merchant = create(:merchant)
-      get api_v1_revenue_path(merchant)
+      get api_v1_revenue_merchant_path(merchant)
 
       expect(response).to be_successful
       body = JSON.parse(response.body, symbolize_names: true)
@@ -16,7 +16,7 @@ describe 'Merchant total revenue request' do
 
     it 'body[:data] is a merchant_revenue' do
       merchant = create(:merchant)
-      get api_v1_revenue_path(merchant)
+      get api_v1_revenue_merchant_path(merchant)
 
       expect(response).to be_successful
       body = JSON.parse(response.body, symbolize_names: true)
@@ -47,7 +47,7 @@ describe 'Merchant total revenue request' do
   describe 'response data' do
     it 'returns correct merchant and revenue' do
       merchant_with_65_99_total_revenue
-      get api_v1_revenue_path(@merchant)
+      get api_v1_revenue_merchant_path(@merchant)
 
       body = JSON.parse(response.body, symbolize_names: true)
       revenue_data = body[:data]
