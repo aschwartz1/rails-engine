@@ -56,4 +56,17 @@ describe 'Merchant total revenue request' do
       expect(revenue_data[:attributes][:revenue]).to eq(65.99)
     end
   end
+
+  describe 'sad path' do
+    it 'returns 404 when merchant is not found' do
+      get api_v1_revenue_merchant_path(-1)
+
+      body = JSON.parse(response.body, symbolize_names: true)
+      data = body[:data]
+
+      expect(response).to have_http_status(404)
+      expect(data[:id]).to be_nil
+      expect(data[:attributes][:revenue]).to be_nil
+    end
+  end
 end
