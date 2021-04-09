@@ -190,20 +190,21 @@ Track Merchants and their items, invoices, and transactions.
 >    "type": "merchant_name_revenue",
 >    "attributes": {
 >      "name": "WPI Records",
-       "revenue": 999.01
-     }
+>      "revenue": 999.01
+>    }
 >  },
 >  {
 >    "id": "2",
 >    "type": "merchant_name_revenue",
 >    "attributes": {
 >      "name": "Brahan's Books"
-       "revenue": 10.0
+>      "revenue": 10.0
 >     }
->   },
->    ...
+>  },
+>  ...
 >  ]
 >}
 >```
+
   - Notes
     - `quantity` must exist and be an integer > 0
