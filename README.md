@@ -109,7 +109,7 @@ Track Merchants and their items, invoices, and transactions.
 >```
 
   - Notes
-    - See [get all merchants](#get_all_merchants) for pagination information
+    - See [Merchants](#merchants) _Get all merchants_ for pagination information
 
 **Get one item**
 > `GET /api/v1/item/:id` for an `:id` of 1 will return data in the form
